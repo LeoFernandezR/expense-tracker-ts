@@ -1,7 +1,10 @@
-import React from "react"
+import React, {useState} from "react"
 
-import Expenses from "./components/Expenses/Expenses"
-const expenses = [
+import Expenses from "./components/Expenses/Expenses/Expenses"
+import NewExpense from "./components/NewExpense/NewExpense/NewExpense"
+import {Expense} from "./types"
+
+const initialExpenses = [
   {
     id: "e1",
     title: "Toilet Paper",
@@ -24,9 +27,15 @@ const expenses = [
 ]
 
 const App: React.FC = () => {
+  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
+
+  const addExpenseItem = (expense: Expense): void => {
+    setExpenses((prevExpenses) => [expense, ...prevExpenses])
+  }
+
   return (
     <div>
-      <h2>Hi Mom</h2>
+      <NewExpense onAddExpense={addExpenseItem} />
       <Expenses expenses={expenses} />
     </div>
   )
